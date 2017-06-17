@@ -17,3 +17,6 @@ msgstr ""
 
 msgid "I already have a membership"
 msgstr "Eu já tenho uma associação"
+
+msgid "Member since"
+msgstr "Membro desde"

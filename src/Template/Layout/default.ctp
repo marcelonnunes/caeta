@@ -234,15 +234,34 @@
                         <!-- The user image in the navbar-->
                         <?php echo $this->Html->image('user2-160x160.jpg', array('class="user-image" alt="User Image"')); ?>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs">
+                        	<?php
+	                        	$username = $this->request->session()->read('Auth.User.username');
+	                        	$first_name = $this->request->session()->read('Auth.User.first_name');
+	                        	$last_name = $this->request->session()->read('Auth.User.last_name');
+	                        	$created = $this->request->session()->read('Auth.User.created');
+	                        	
+                        		if(!empty($first_name) && !empty($last_name)){
+                        			$login_name = $first_name.' '.$last_name;
+                        		}elseif (!empty($first_name) && empty($last_name)){
+                        			$login_name = $first_name;
+                        		}else{
+                        			$login_name = $username;
+                        		}
+                        		
+                        		echo $login_name;
+                        	?>
+                        </span>
                      </a>
                      <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
                            <?php echo $this->Html->image('user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
                            <p>
-                              Alexander Pierce - Web Developer
-                              <small>Member since Nov. 2012</small>
+                              <?php echo $login_name; ?>
+                             	<small>
+                              		<?php echo ( isset($created) && !empty($created) ) ? __d('CakeDC/Users', 'Member since').' '.$created->format('M / Y'):'';  ?>
+                         		</small>
                            </p>
                         </li>
                         <!-- Menu Body -->
@@ -263,7 +282,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                            <div class="pull-left">
-                              <a href="#" class="btn btn-default btn-flat">Profile</a>
+                              <?php echo $this->Html->link('Profile', array('plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action'=>'profile'), array('class'=>"btn btn-default btn-flat", 'escape' => false)); ?>
                            </div>
                            <div class="pull-right">
                            		<?php echo $this->User->logout('Sair',array('class'=>"btn btn-default btn-flat"));?>
@@ -289,7 +308,7 @@
                   <?php echo $this->Html->image('user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
                </div>
                <div class="pull-left info">
-                  <p>Alexander Pierce</p>
+                  <p><?php echo $login_name; ?></p>
                   <!-- Status -->
                   <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                </div>

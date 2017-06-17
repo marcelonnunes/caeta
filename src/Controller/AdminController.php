@@ -7,6 +7,9 @@ class AdminController extends AppController{
 
     	$this->set('title', 'Home');
     	
+//     	prd($this->request->session()->read('Auth.User'));
+//     	prd($this->Auth);
+    	
     	// Add at the end of the trail
 //     	$this->Breadcrumbs->add(
 //     			'Products',

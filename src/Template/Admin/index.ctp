@@ -4,6 +4,10 @@ $this->Html->addCrumb ( "Index", [
 		'action' => 'index' 
 ] );
 $this->Form->templates($form_templates['default']);
+
+// pr($this->User->welcome());
+// prd($this->User);
+
 ?>
 <div class="box box-success">
 
