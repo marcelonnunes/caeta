@@ -17,6 +17,9 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Core\Configure;
+// use Cake\ORM\TableRegistry;
+use Cake\Network\Session;
+
 
 /**
  * Application Controller
@@ -44,7 +47,7 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-
+        
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -54,7 +57,7 @@ class AppController extends Controller
         
         // CakeDC Users Plugin for CakePHP 3
         $this->loadComponent('CakeDC/Users.UsersAuth');
-        
+
         $this->set('form_templates', Configure::read('Templates'));
     }
 
@@ -65,11 +68,47 @@ class AppController extends Controller
      * @return \Cake\Network\Response|null|void
      */
     public function beforeRender(Event $event)
-    {
+    {    	
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+          
+        
+        //Verifica se existe um usuário logado no sistem para disponibilizar algumas informações na view.
+        $session = array();
+        if( $this->request->session()->check('Auth.User.id') ){
+
+			$uid = $this->request->session()->read('Auth.User.id');
+	
+        	$this->loadModel('CakeDC/Users.SocialAccounts');
+        	
+        	$query = $this->SocialAccounts->find('all')
+        		        	        	->where(['SocialAccounts.user_id' => $uid])
+        		        	        	->select(['SocialAccounts.avatar']) 
+        		        	        	->all()
+        		        	        	->first();
+        	
+			if(!empty($query)){
+				$avatar = $query->toArray();
+				$this->request->session()->write('Auth.User.avatar',$avatar['avatar']);
+			}
+			
+			$session= $this->request->session()->read('Auth.User');
+			
+			if(!empty($session['first_name']) && !empty($session['last_name'])){
+				$login_name = $session['first_name'].' '.$session['last_name'];
+			}elseif (!empty($session['first_name']) && empty($session['last_name'])){
+				$login_name =  $session['first_name'];
+			}else{
+				$login_name = $session['username'];
+			}
+					
+			$this->request->session()->write('Auth.User.login_name',$login_name);
+       	}
+        	
+       	$this->set('session',$session);
+
     }
 }

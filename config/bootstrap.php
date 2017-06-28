@@ -239,8 +239,8 @@ Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 
 Configure::write('Users.Social.login', true);
 
-Configure::write('OAuth.providers.facebook.options.clientId', 'YOUR APP ID');
-Configure::write('OAuth.providers.facebook.options.clientSecret', 'YOUR APP SECRET');
+Configure::write('OAuth.providers.facebook.options.clientId', '242214672931730');
+Configure::write('OAuth.providers.facebook.options.clientSecret', 'd9b13178275d3623c59768ef985621aa');
 
 Configure::write('OAuth.providers.twitter.options.clientId', 'YOUR APP ID');
 Configure::write('OAuth.providers.twitter.options.clientSecret', 'YOUR APP SECRET');
@@ -250,8 +250,8 @@ Configure::write('OAuth.providers.instagram.options.clientSecret', 'YOUR APP SEC
 
 // Configure::write('Users.GoogleAuthenticator.login', true);
 
-Configure::write('OAuth.providers.google.options.clientId', 'YOUR APP ID');
-Configure::write('OAuth.providers.google.options.clientSecret', 'YOUR APP SECRET');
+Configure::write('OAuth.providers.google.options.clientId', '265921209368-cm79jra16uvdqevn5vrc1dtap2k9vli4.apps.googleusercontent.com');
+Configure::write('OAuth.providers.google.options.clientSecret', 'Us_qlm6AJwd4q4Nnh4lpu7A7');
 
 Plugin::load('Cake/Localized');
 

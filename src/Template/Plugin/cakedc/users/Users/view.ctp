@@ -1,72 +1,4 @@
 <?php
-$Users = ${$tableAlias};
-?>
-<div class="actions columns large-2 medium-3">
-    <h3><?= __d('CakeDC/Users', 'Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__d('CakeDC/Users', 'Edit User'), ['action' => 'edit', $Users->id]) ?> </li>
-        <li><?= $this->Form->postLink(
-                __d('CakeDC/Users', 'Delete User'),
-                ['action' => 'delete', $Users->id],
-                ['confirm' => __d('CakeDC/Users', 'Are you sure you want to delete # {0}?', $Users->id)]
-            ) ?> </li>
-        <li><?= $this->Html->link(__d('CakeDC/Users', 'List Users'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__d('CakeDC/Users', 'New User'), ['action' => 'add']) ?> </li>
-    </ul>
-</div>
-<div class="users view large-10 medium-9 columns">
-    <h2><?= h($Users->id) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-
-        </div>
-        
-        
-        <div class="large-2 columns dates end">
-            <h6 class="subheader"><?= __d('CakeDC/Users', 'Token Expires') ?></h6>
-            <p><?= h($Users->token_expires) ?></p>
-            <h6 class="subheader"><?= __d('CakeDC/Users', 'Activation Date') ?></h6>
-            <p><?= h($Users->activation_date) ?></p>
-            <h6 class="subheader"><?= __d('CakeDC/Users', 'Tos Date') ?></h6>
-            <p><?= h($Users->tos_date) ?></p>
-            <h6 class="subheader"><?= __d('CakeDC/Users', 'Created') ?></h6>
-            <p><?= h($Users->created) ?></p>
-            <h6 class="subheader"><?= __d('CakeDC/Users', 'Modified') ?></h6>
-            <p><?= h($Users->modified) ?></p>
-        </div>
-        
-    </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-        <h4 class="subheader"><?= __d('CakeDC/Users', 'Social Accounts') ?></h4>
-        <?php // if (!empty($Users->social_accounts)) : ?>
-        <?php if (true) : ?>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th><?= __d('CakeDC/Users', 'Provider') ?></th>
-                    <th><?= __d('CakeDC/Users', 'Avatar') ?></th>
-                    <th><?= __d('CakeDC/Users', 'Active') ?></th>
-                    <th><?= __d('CakeDC/Users', 'Created') ?></th>
-                    <th><?= __d('CakeDC/Users', 'Modified') ?></th>
-                </tr>
-                <?php foreach ($Users->social_accounts as $socialAccount) : ?>
-                    <tr>
-                        <td><?= h($socialAccount->provider) ?></td>
-                        <td><?= h($socialAccount->avatar) ?></td>
-                        <td><?= h($socialAccount->active) ?></td>
-                        <td><?= h($socialAccount->created) ?></td>
-                        <td><?= h($socialAccount->modified) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-    </div>
-</div>
-
-
-
-<?php
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -78,6 +10,12 @@ $Users = ${$tableAlias};
  */
 
 $Users = ${$tableAlias};
+
+$this->Html->addCrumb ( __d('CakeDC/Users', 'List Users') , [
+		'plugin' => 'CakeDC/Users',
+		'controller' => 'Users',
+		'action'=>'index',
+] );
 
 $this->Html->addCrumb ( __d('CakeDC/Users', 'View') , [
 		'plugin' => 'CakeDC/Users',
@@ -388,9 +326,7 @@ $this->Html->addCrumb ( __d('CakeDC/Users', 'View') , [
 
 		</div>
 		<!-- /.box-body -->
-		<div class="box-footer">
-		    <?= $this->Form->button(__d('CakeDC/Users', 'Submit'),array('class'=>'btn btn-success pull-right')) ?>
-		</div>
+
 	<?= $this->Form->end() ?>
 		<!-- /.box-footer -->
 	<!-- /.box-body -->
@@ -401,3 +337,74 @@ $this->Html->addCrumb ( __d('CakeDC/Users', 'View') , [
 </div>
 
 
+<?php if (!empty($Users->social_accounts)) : ?>
+	<div>	
+		<div class="box box-default box-solid">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-users margin-r-5"></i><?= __d('CakeDC/Users', 'Social Accounts') ?></h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse">
+						<i class="fa fa-minus"></i>
+					</button>
+				</div>
+			</div>
+	
+			<div class="box-body">
+				<table id="example1" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+	                        <th><?= __d('CakeDC/Users', 'Avatar'); ?></th>
+	                        <th><?= __d('CakeDC/Users', 'Provider'); ?></th>
+	                        <th><?= __d('CakeDC/Users', 'Link'); ?></th>
+	                     	<th><?= __d('CakeDC/Users', 'Active') ?></th>
+                    		<th><?= __d('CakeDC/Users', 'Created') ?></th>
+                   		 	<th><?= __d('CakeDC/Users', 'Modified') ?></th>
+						</tr>
+					</thead>
+					<tbody>
+	                    <?php
+	                    	foreach ($Users->social_accounts as $socialAccount):
+
+	                        	$escapedUsername = h($socialAccount->username);
+	                        	$linkText = empty($escapedUsername) ? __d('CakeDC/Users', 'Link to {0}', h($socialAccount->provider)) : h($socialAccount->username)
+	                	?>
+	                        <tr>
+	                            <td class="user-block"><?= $this->Html->image( $socialAccount->avatar, ['class'=>['img-responsive img-circle']] ) ?></td>
+	                            <td><?= h($socialAccount->provider) ?></td>
+	                            <td><?= $this->Html->link( $linkText, $socialAccount->link, ['target' => '_blank']) ?></td>
+	                 			<td><?= h($socialAccount->active) ?></td>
+                        		<td><?= h($socialAccount->created) ?></td>
+                        		<td><?= h($socialAccount->modified) ?></td>
+		                        </tr>
+	                        <?php
+	                    	endforeach;
+	                    ?>
+				</table>
+			</div>
+			
+		</div>
+	</div>
+<?php endif; ?>
+
+<script>
+  $(function () {
+    $('#example1').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false,
+      "columnDefs": [
+          {className: "dt-center", "targets": "_all"}
+        ],
+
+    });
+  });
+</script>
+
+<style>
+#example1 th.dt-center, td.dt-center { 
+	vertical-align: middle !important;
+}
+</style>

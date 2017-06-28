@@ -20,10 +20,13 @@
 <html>
 
     <head>
-
+		
+		<meta name="google-site-verification" content="tOxXmPjzDhmufB1rFTub9o4wkUIs3p2bifEwuihpYkM" />
+       
         <?= $this->Html->charset() ?>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
         <title>
             <?php  
             	if(isset($title)){
@@ -147,7 +150,7 @@
                                  <a href="#">
                                     <div class="pull-left">
                                        <!-- User Image -->
-                                       <?php echo $this->Html->image('user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
+                                       <?php echo $this->Html->image(isset($session['avatar'])?$session['avatar']:'user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
                                     </div>
                                     <!-- Message title and timestamp -->
                                     <h4>
@@ -232,33 +235,18 @@
                      <!-- Menu Toggle Button -->
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <?php echo $this->Html->image('user2-160x160.jpg', array('class="user-image" alt="User Image"')); ?>
+                        <?php echo $this->Html->image(isset($session['avatar'])?$session['avatar']:'user2-160x160.jpg', array('class="user-image" alt="User Image"')); ?>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">
-                        	<?php
-	                        	$username = $this->request->session()->read('Auth.User.username');
-	                        	$first_name = $this->request->session()->read('Auth.User.first_name');
-	                        	$last_name = $this->request->session()->read('Auth.User.last_name');
-	                        	$created = $this->request->session()->read('Auth.User.created');
-	                        	
-                        		if(!empty($first_name) && !empty($last_name)){
-                        			$login_name = $first_name.' '.$last_name;
-                        		}elseif (!empty($first_name) && empty($last_name)){
-                        			$login_name = $first_name;
-                        		}else{
-                        			$login_name = $username;
-                        		}
-                        		
-                        		echo $login_name;
-                        	?>
+                        	<?php echo  $this->request->session()->read('Auth.User.login_name'); ?>
                         </span>
                      </a>
                      <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                           <?php echo $this->Html->image('user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
+                           <?php echo $this->Html->image(isset($session['avatar'])?$session['avatar']:'user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
                            <p>
-                              <?php echo $login_name; ?>
+                              <?php echo $this->request->session()->read('Auth.User.login_name'); ?>
                              	<small>
                               		<?php echo ( isset($created) && !empty($created) ) ? __d('CakeDC/Users', 'Member since').' '.$created->format('M / Y'):'';  ?>
                          		</small>
@@ -305,10 +293,10 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                <div class="pull-left image">
-                  <?php echo $this->Html->image('user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
+                  <?php echo $this->Html->image(isset($session['avatar'])?$session['avatar']:'user2-160x160.jpg', array('class="img-circle" alt="User Image"')); ?>
                </div>
                <div class="pull-left info">
-                  <p><?php echo $login_name; ?></p>
+                  <p><?php echo $this->request->session()->read('Auth.User.login_name'); ?></p>
                   <!-- Status -->
                   <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                </div>

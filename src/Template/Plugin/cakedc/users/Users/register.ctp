@@ -9,6 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 use Cake\Core\Configure;
+$this->layout = 'login';
 $this->Form->templates($form_templates['register']);
 ?>
 
