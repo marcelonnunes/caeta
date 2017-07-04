@@ -65,6 +65,7 @@
 
         <!-- DataTables -->
         <?php echo $this->Html->css('datatables/dataTables.bootstrap'); ?>
+        <?php echo $this->Html->css('datatables/select.dataTables.min'); ?>
 
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
             page. However, you can choose any other skin. Make sure you
@@ -325,7 +326,7 @@
                   <ul class="treeview-menu">
                      <li><?php echo $this->Html->link('<i class="fa fa-user-plus"></i> Cadastrar', array('plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action'=>'add'), array('escape' => false)); ?></li>
                      <li><?php echo $this->Html->link('<i class="fa fa-search"></i> Pesquisar', array('plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action'=>'index'), array('escape' => false)); ?></li>
-                     <li><a href="#"><i class="fa fa-lock"></i> Permissões</a></li>
+                     <li><?php echo $this->Html->link('<i class="fa fa-lock"></i> Permissões', array('plugin' => false, 'controller' => 'Admin', 'action'=>'users_manager'), array('escape' => false)); ?></li>
                   </ul>
                </li>
                <li><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
@@ -486,6 +487,7 @@
 	<!-- DataTables -->
    	<?php echo $this->Html->script('datatables/jquery.dataTables.min'); ?>
    	<?php echo $this->Html->script('datatables/dataTables.bootstrap.min'); ?>
+   	<?php echo $this->Html->script('datatables/dataTables.select.min'); ?>
    	
  	<!-- iCheck -->
     <?php echo $this->Html->script('iCheck/icheck.min'); ?>

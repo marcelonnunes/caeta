@@ -20,3 +20,11 @@ msgstr "Eu já tenho uma associação"
 
 msgid "Member since"
 msgstr "Membro desde"
+
+#: View/users_manager.ctp:3,13
+msgid "Permissions"
+msgstr "Permissões"
+
+#: View/users_manager.ctp:30
+msgid "Role"
+msgstr "Regra"
